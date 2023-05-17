@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Statistiques{% endblock %}
+
+{% block body %}
+{% include 'entete.html.twig' %}
+{% if statsByPays %}
+    <table>
+        <thead>
+            <tr>
+                <th>Pays</th>
+                <th>Minimum</th>
+                <th>Maximum</th>
+                <th>Moyenne</th>
+            </tr>
+        </thead>
+        <tbody>
+        <a href="{{ path('app_seismes_search') }}">Retour à la recherche</a>
+            {% for stat in statsByPays %}
+                <tr>
+                    <td>{{ stat.pays }}</td>
+                    <td>{{ stat.min_mag}}</td>
+                    <td>{{ stat.max_mag }}</td>
+                    <td>{{ stat.avg_mag }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+     {% endif %}
+    {% include 'footer.html.twig' %}
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Recherche{% endblock %}
+
+{% block body %}
+{% include 'entete.html.twig' %}
+    {{ form_start(form) }}
+
+        <button class="btn">{{ button_label|default('Save') }}</button>
+    {{ form_end(form) }}
+
+    {% if seismes is not empty %}
+        <h2>Résultats :</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Pays</th>
+                    <th>Magnitude</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for seisme in seismes %}
+                    <tr>
+                        <td>{{ seisme.instant|date('d/m/Y H:i') }}</td>
+                        <td>{{ seisme.pays }}</td>
+                        <td>{{ seisme.mag }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+    {% include 'footer.html.twig' %}
+
+{% endblock %}

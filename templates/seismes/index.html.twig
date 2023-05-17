@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Seismes index{% endblock %}
+
+{% block body %}
+{% include 'footer.html.twig' %}
+    <h1>Seismes index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Instant</th>
+                <th>Lat</th>
+                <th>Lon</th>
+                <th>Pays</th>
+                <th>Mag</th>
+                <th>Profondeur</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for seisme in seismes %}
+            <tr>
+                <td>{{ seisme.id }}</td>
+                <td>{{ seisme.instant ? seisme.instant|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ seisme.lat }}</td>
+                <td>{{ seisme.lon }}</td>
+                <td>{{ seisme.pays }}</td>
+                <td>{{ seisme.mag }}</td>
+                <td>{{ seisme.profondeur }}</td>
+                <td>
+                    <a href="{{ path('app_seismes_show', {'id': seisme.id}) }}">show</a>
+                    <a href="{{ path('app_seismes_edit', {'id': seisme.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_seismes_new') }}">Create new</a>
+    {% include 'footer.html.twig' %}
+
+{% endblock %}
