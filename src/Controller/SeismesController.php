@@ -62,9 +62,7 @@ class SeismesController extends AbstractController
             $seismes = $this->seismesRepository->findByPaysAndMagMax($pays, $maxIntensity);
 
         } else {
-            $seismes = $entityManager
-                ->getRepository(Seismes::class)
-                ->findAll();
+            $seismes = $this->seismesRepository->findByLimit(50);
         }
 
         return $this->render('seismes/search.html.twig', [
