@@ -39,18 +39,19 @@ class SearchType extends AbstractType
                         ->orderBy('s.pays', 'ASC');
                 },
                 'choice_label' => 'pays',
-                'placeholder' => 'Choisir un pays',
+                'placeholder' => 'Toutes les intensités',
                 'required' => false,
                 'mapped' => false,
                 'attr' => [
                     'autocomplete' => 'true',
                     'minlength' => 3,
                 ],
+                'data' => null, // Assigner la valeur -1 à l'option "Choisir un pays"
             ])
             // On ajoute un champ texte pour l'intensité maximale
             ->add('maxIntensity', ChoiceType::class, [
                 'choices' => [
-                    'Choisir une intensité maximale' => null,
+                    'Toutes les intensités' => -1,
                     '1' => 1,
                     '2' => 2,
                     '3' => 3,

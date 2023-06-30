@@ -49,18 +49,24 @@ class SeismesRepository extends ServiceEntityRepository
     }
     // On crée une fonction qui permet de rechercher les séismes par pays et intensité maximale
     public function findByPaysAndMagMax($pays, $magMax)
-{
-    $pays = trim($pays);// On supprime les espaces avant et après le pays pour formater correctement la requête
-    return $this->createQueryBuilder('s')
-        ->where('s.pays = :pays')
-        ->andWhere('s.mag <= :magMax')
-        ->setParameter('pays', $pays)
-        ->setParameter('magMax', $magMax)
-        ->setMaxResults(50)
-        ->orderBy('s.mag', 'DESC')
-        ->getQuery()
-        ->getResult();
-}
+    {
+        $queryBuilder = $this->createQueryBuilder('s')
+            ->setMaxResults(50)
+            ->orderBy('s.mag', 'DESC');
+    
+        if ($pays !== null) {
+            $pays = trim($pays);
+            $queryBuilder->andWhere('s.pays = :pays')
+                ->setParameter('pays', $pays);
+        }
+    
+        if ($magMax !== -1) {
+            $queryBuilder->andWhere('s.mag <= :magMax')
+                ->setParameter('magMax', $magMax);
+        }
+    
+        return $queryBuilder->getQuery()->getResult();
+    }
     public function findByMag($magMax)
     {
         return $this->createQueryBuilder('s')
